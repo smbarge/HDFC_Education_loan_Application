@@ -1,0 +1,335 @@
+POST http://localhost:5173/api/applications/123456 HTTP/1.1
+content-type: application/json
+
+{
+    "personalDetails": {
+        "district_id": "1",
+        "religion": "2",
+        "address": "123 Main St",
+        "name": "John Doe",
+        "dob": "1990-01-01",
+        "gender": "1",
+        "mobile": "1234567890",
+        "email": "john.doe@example.com",
+        "pan": "ABCDE1234F",
+        "current_address": "456 Elm St",
+        "current_district": "2",
+        "current_taluka": "3",
+        "current_place": "Some Place",
+        "current_pincode": "123456",
+        "permanent_address": "789 Pine St",
+        "permanent_district": "4",
+        "permanent_taluka": "5",
+        "permanent_place": "Another Place",
+        "permanent_pincode": "654321",
+        "marital_status": "1",
+        "education_qualification": "3",
+        "details": "Some details",
+        "guardian": "1",
+        "occupation": "2",
+        "income": "50000",
+        "past_surety_commitment": "None",
+        "aadhar": "123412341234",
+        "occupationtype": "Software Developer",
+        "riot_victim": "0",
+        "natural_calamity_victim": "0",
+        "disabled_person": "0"
+    }
+}
+###
+POST http://localhost:5173/api/applications/123456 HTTP/1.1
+content-type: application/json
+
+{
+    "name": "sample",
+    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+}
+
+
+###
+PUT http://localhost:5173/api/applications/123456 HTTP/1.1
+content-type: application/json
+
+{
+    "personalDetails" : {
+        "foo": "bar"
+    }
+}
+
+###
+GET http://localhost:5173/api/applications/8805027292 HTTP/1.1
+content-type: application/json
+
+###
+GET http://localhost:5173/api/applications/9028947883 HTTP/1.1
+content-type: application/json
+
+###
+GET http://localhost:5173/api/applications/9404840426 HTTP/1.1
+content-type: application/json
+
+###
+GET http://localhost:5173/api/applications/7276051061 HTTP/1.1
+content-type: application/json
+
+###
+GET http://localhost:5173/api/applications/7756805007 HTTP/1.1
+content-type: application/json
+
+###
+GET http://localhost:5173/api/masters HTTP/1.1
+content-type: application/json
+####
+POST http://localhost:5173/termloan/api/applications/9960689933/property HTTP/1.1
+content-type: application/json
+
+{
+    "application_id" : "267",
+    "user": "9960689933",
+    "userId": "some-guid-00995fc",
+    "property": {
+        "property_type": "1",
+        "description": "{\"area\":\"area\",\"area_unit\":\"\"}",
+        "unit_no": "unitno",
+        "survey_no": "survey no",
+        "street_address": "street address",
+        "dist_id": "2725",
+        "taluka_id": "272510",
+        "place": "place",
+        "pincode": "411057",
+        "property_value": "2000000",
+        "sub_property": "8A"
+    }
+}
+
+####
+POST http://localhost:5173/termloan/api/applications/9960689933/property
+content-type: application/json
+
+{
+    "application_id":  267,
+    "user":  "9960689933",
+    "userId":  "ac17c3fa-ac9f-4bae-bdbe-b3217d484cfd",
+    "property":  {
+        "property_type": "1",
+        "unit_no": "01",
+        "survey_no": "01",
+        "street_address": "01",
+        "dist_id": "2725",
+        "taluka_id": "272510",
+        "place": "01",
+        "pincode": "01",
+        "description": "{\"area\":\"01\",\"area_unit\":\"\"}",
+        "property_value": "01",
+        "sub_property": "8A"
+        }
+}
+####
+GET http://localhost:5173/api/applications/8805027292/property/36
+content-type: application/json
+
+### Test the POST endpoint for inserting an FD (Fixed Deposit)
+
+POST http://localhost:5173/api/applications/8805027292/fd
+Content-Type: application/json
+
+{
+  "fd": {
+    "bank_name": "State Bank of India",
+    "branch_name": "Main Branch",
+    "street_address": "1234 Elm St",
+    "dist_id": 1,
+    "taluka_id": 2,
+    "place": "CityPlace",
+    "pincode": "123456",
+    "fd_acc_no": "SBIN123456789",
+    "start_date": "2024-01-01",
+    "maturity_date": "2027-01-01",
+    "amount": 100000,
+    "owner_type": 1
+  },
+  "application_id": 36
+}
+
+### Test GET FDs API
+GET http://localhost:5173/api/applications/8805027292/fd/36
+Content-Type: application/json
+
+### Example Response Handling
+# Use the following headers if authentication is required
+# Authorization: Bearer your-token
+
+### Update FD with application ID 36
+PUT http://localhost:5173/api/applications/8805027292/fd/36
+Content-Type: application/json
+
+{
+    "fd": {
+        "id": 2,
+        "application_id": 36,
+        "bank_name": "Your Bank Name",
+        "branch_name": "Your Branch Name",
+        "street_address": "123 Example St",
+        "dist_id": 1,
+        "taluka_id": 1,
+        "place": "Example Place",
+        "pincode": "123456",
+        "fd_acc_no": "FD123456789",
+        "start_date": "2024-01-01",
+        "maturity_date": "2025-01-01",
+        "amount": "100000",
+        "owner_type": 1 
+    },
+    "user": "8805027292j",
+    "userId": "some-uid-aaff12345f" 
+}
+
+
+### Insert a new LIC policy
+POST http://localhost:5173/api/applications/8805027292/licPolicy
+Content-Type: application/json
+
+{
+  "licPolicy": {
+    "policy_name": "Life Insurance Policy",
+    "policy_type": "Whole Life",
+    "policy_receipt_no": "REC123456",
+    "surrender_value": 50000,
+    "start_date": "2024-08-31",
+    "maturity_date": "2034-08-31"
+  },
+  "application_id": 36
+}
+
+### Update licPolicy with application ID 36
+PUT http://localhost:5173/api/applications/8805027292/licPolicy/36
+Content-Type: application/json
+
+{
+    "licPolicy": {
+        "id": 2,
+        "application_id": 36,
+        "policy_name": "Life Insurance Policy",
+    "policy_type": "Whole Life",
+    "policy_receipt_no": "REC123456",
+    "surrender_value": 50000,
+    "start_date": "2024-08-31",
+    "maturity_date": "2034-08-31"
+    },
+    "user": "8805027292",
+    "userId": "some-uid-aaff12345f" 
+}
+
+### Test DELETE licPolicy API
+DELETE http://localhost:5173/api/applications/8805027292/licPolicy/3
+Content-Type: application/json
+
+
+###
+https://keycloak.chanakyasoft.com/realms/fat/protocol/openid-connect/token
+content-type:   application/x-www-form-urlencoded  
+
+grant_type=client_credentials&client_id=admin-cli&client_secret=6IK6vGWtVtx5SZrLGiRf8c4H6MUMLAPi
+
+###
+POST https://keycloak.chanakyasoft.com/realms/fat/protocol/openid-connect/token HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&client_id=admin-cli&client_secret=6IK6vGWtVtx5SZrLGiRf8c4H6MUMLAPi
+
+###
+POST https://keycloak.chanakyasoft.com/realms/fat/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&client_id=loan_application&username=8805027292&password=Admin@2024
+
+
+###
+https://keycloak.chanakyasoft.com/realms/fat/protocol/openid-connect/token
+###
+
+GET https://keycloak.chanakyasoft.com/realms/fat/protocol/openid-connect/userinfo
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiQ2ZyWkhjeUwtVncwY0t2WWRValVkMTdkUW95dHd6Z3h6b25tU0paTkhNIn0.eyJleHAiOjE3Mjc3OTAwOTUsImlhdCI6MTcyNzc4OTc5NSwianRpIjoiMzZlNmM4MDQtN2UzNS00OTI4LWEzMDEtNDgxMGUwNjQ3ZTUzIiwiaXNzIjoiaHR0cHM6Ly9rZXljbG9hay5jaGFuYWt5YXNvZnQuY29tL3JlYWxtcy9mYXQiLCJzdWIiOiI0MTJiM2ZlNC0xZWZhLTQxY2QtYTBhYy1kYTZjOTJmZjliZGIiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJhZG1pbi1jbGkiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJjbGllbnRIb3N0IjoiMTAzLjEzMi4yNDQuMTc2IiwicHJlZmVycmVkX3VzZXJuYW1lIjoic2VydmljZS1hY2NvdW50LWFkbWluLWNsaSIsImNsaWVudEFkZHJlc3MiOiIxMDMuMTMyLjI0NC4xNzYiLCJjbGllbnRfaWQiOiJhZG1pbi1jbGkifQ.FRw-vkynWpRGFsdnbEaOtI72n9Pfcjc35j-x2k5MpEOKzgMJtK3keY77w3JzUqWrlsVXsL2Vita_53qh9Xyfj3lYLlR1oFq1ODfrDLQT6g_pGAar-cb9qF_yfNAV6cGVK-aIABlpIg_HT77R0aLk5aeAZa0Hv381B2SIv1GbyizLrnEoyc5eMbJTw3HUR2zml9zUaLCejVF67-JvtBxrNUE8XaAyMG75-eCr4ux-H8NWXucJdGM593667MFbeedCOpc1eEuOE-Ywhltb9a-0IC772D9g9eCEW_AmXN22I33Rp4aed4YrumxDtMecsK-HWfz9nTETIeGnZNCu4i8j7A
+
+GET https://keycloak.chanakyasoft.com/realms/fat/protocol/openid-connect/userinfo
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiQ2ZyWkhjeUwtVncwY0t2WWRValVkMTdkUW95dHd6Z3h6b25tU0paTkhNIn0.eyJleHAiOjE3Mjc3OTAwOTUsImlhdCI6MTcyNzc4OTc5NSwianRpIjoiMzZlNmM4MDQtN2UzNS00OTI4LWEzMDEtNDgxMGUwNjQ3ZTUzIiwiaXNzIjoiaHR0cHM6Ly9rZXljbG9hay5jaGFuYWt5YXNvZnQuY29tL3JlYWxtcy9mYXQiLCJzdWIiOiI0MTJiM2ZlNC0xZWZhLTQxY2QtYTBhYy1kYTZjOTJmZjliZGIiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJhZG1pbi1jbGkiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJjbGllbnRIb3N0IjoiMTAzLjEzMi4yNDQuMTc2IiwicHJlZmVycmVkX3VzZXJuYW1lIjoic2VydmljZS1hY2NvdW50LWFkbWluLWNsaSIsImNsaWVudEFkZHJlc3MiOiIxMDMuMTMyLjI0NC4xNzYiLCJjbGllbnRfaWQiOiJhZG1pbi1jbGkifQ.FRw-vkynWpRGFsdnbEaOtI72n9Pfcjc35j-x2k5MpEOKzgMJtK3keY77w3JzUqWrlsVXsL2Vita_53qh9Xyfj3lYLlR1oFq1ODfrDLQT6g_pGAar-cb9qF_yfNAV6cGVK-aIABlpIg_HT77R0aLk5aeAZa0Hv381B2SIv1GbyizLrnEoyc5eMbJTw3HUR2zml9zUaLCejVF67-JvtBxrNUE8XaAyMG75-eCr4ux-H8NWXucJdGM593667MFbeedCOpc1eEuOE-Ywhltb9a-0IC772D9g9eCEW_AmXN22I33Rp4aed4YrumxDtMecsK-HWfz9nTETIeGnZNCu4i8j7A
+
+###
+POST https://keycloak.chanakyasoft.com/realms/fat/protocol/openid-connect/token HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&client_id=admin-cli&client_secret=6IK6vGWtVtx5SZrLGiRf8c4H6MUMLAPi
+
+###
+POST https://keycloak.chanakyasoft.com/realms/fat/protocol/openid-connect/token HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&client_id=admin-cli&client_secret=6IK6vGWtVtx5SZrLGiRf8c4H6MUMLAPi
+
+
+###
+POST https://keycloak.chanakyasoft.com/realms/fat/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=loan_application&grant_type=password&username=8805027292&password=Admin@2024
+
+
+###
+GET http://localhost:5174/api/applicationStatus/266-13 HTTP/1.1
+content-type: application/json
+
+###
+GET http://localhost:5174/api/uploadDocsView/266 HTTP/1.1
+content-type: application/json
+
+###
+Get http://localhost:5173/api/applicationstatus/267-13 http/1.1
+content-type: application/json
+
+###
+POST http://localhost:5173/api/reUploadData/aadharCardInfo HTTP/1.1
+content-type: application/json
+
+
+{
+    "application_id" : "267",
+    "iteration" : "2",
+    "tableName" : "personal_details",
+    "data" :  {
+        "aadhar" : "123-345-5555",
+        "name" : "Salman Khan",
+        "dob" : "22-01-1975",
+        "gender" : "Female",
+        "permanent_address" : "pune, India",
+        "permanent_taluka" : "mulshi",
+        "permanent_district" : "Pune",
+        "permanent_pincode" : "411001"
+    }
+}
+
+###
+GET http://localhost:5173/api/reUploadData/aadharCardInfo?application_id=267 HTTP/1.1
+content-type: application/json
+
+
+###
+POST http://localhost:5173/termloan/api/sendSubmitEmail
+Content-Type: application/json
+
+{
+    "id":"1234",
+    "email":"omkarpatil0424@gmail.com",
+    "applicantName":"Omkar Patil",
+    "applicationDate":"22/02/2025",
+    "quotationAmount":"12345.00",
+    "buisnessName":"Chanakya",
+    "districtName":"Kolhapur"
+}
+
+
+###
+GET http://localhost:5179/termloan/api/sanctionInfo?application_id=267 HTTP/1.1
+content-type: application/json
+
