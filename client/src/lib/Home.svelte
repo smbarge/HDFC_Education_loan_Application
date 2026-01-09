@@ -307,7 +307,7 @@
               <h1
                 class="xl:text-lg lg:text-[17px] text-base font-roboto font-semibold"
               >
-                <!-- Fast approval process : -->
+                <!--Fast approval process : -->
                 जलद मंजुरी प्रक्रिया :
               </h1>
             </div>

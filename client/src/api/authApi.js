@@ -44,6 +44,7 @@ const getTokenAndRefreshToken = () => {
 //     return { error: -1, errorMsg: e };
 //   }
 // };
+
 const verifyApplicantAndSendOtp = async ({ mobile, name }) => {
   console.log("verifyApplicantAndSendOtp called ##1 mobileNo: ", mobile);
   try {

@@ -6,7 +6,7 @@ const { Pool } = pkg;
 const pool = new Pool({
   connectionString:
     process.env.DB_URL ||
-    "postgres://hdfc_user:Admin%402024@65.1.113.133/hdfc_loan_new",
+    "postgresql://hdfc_user:Admin%402024@3.110.235.117:5432/prodcopy_hdfc_education_loan",
 });
 
 function getISTTime() {

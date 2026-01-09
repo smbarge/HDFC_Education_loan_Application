@@ -69,6 +69,7 @@ const getApplications = async () => {
     return { error: -1, errorMsg };
   }
 };
+
 const savePersonalDetails = async ({ personalDetails }) => {
   try {
     let url = `/termloan/api/applications/${currentUsername}`;
@@ -106,6 +107,7 @@ const savePersonalDetails = async ({ personalDetails }) => {
     return { error: -1, errorMsg };
   }
 };
+
 const saveBusinessDetails = async ({ businessDetails }) => {
   try {
     let url = `/termloan/api/applications/${currentUsername}`;
@@ -182,6 +184,7 @@ const saveGuarantorPersonalDetails = async ({ guarantorPersonalDetails }) => {
     return { error: -1, errorMsg };
   }
 };
+
 const addCollateralProperty = async ({ property, application_id }) => {
   try {
     let url = `/termloan/api/applications/${currentUsername}/property`;
@@ -256,6 +259,7 @@ const getCollateralProperties = async ({ application_id }) => {
     return { error: -1, errorMsg };
   }
 };
+
 const saveCollateralProperty = async ({ application_id, property }) => {
   try {
     let url = `/termloan/api/applications/${currentUsername}/property/${application_id}`;
@@ -299,6 +303,8 @@ const saveCollateralProperty = async ({ application_id, property }) => {
     return { error: -1, errorMsg };
   }
 };
+
+
 const deleteCollateralProperty = async ({ application_id, id }) => {
   try {
     let url = `/termloan/api/applications/${currentUsername}/property/${application_id}/${id}`;

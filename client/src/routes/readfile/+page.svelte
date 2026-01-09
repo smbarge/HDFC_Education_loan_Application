@@ -3,7 +3,7 @@
 
   async function fetchFile(applicationId, documentId) {
     const response = await fetch(
-      `/termloan/api/upload/${applicationId}/${documentId}/1`
+      `/api/upload/${applicationId}/${documentId}/1`
     );
     if (!response.ok) {
       console.error("Failed to fetch file:", response.statusText);
