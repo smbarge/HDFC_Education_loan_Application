@@ -20,7 +20,7 @@
       >
         <!-- src="/userNew.jpg" -->
         <img
-          src={`/termloan/api/upload/${app.personalDetails.id}/1/1`}
+          src={`/termloan/api/upload/${app.personalDetails.id}/1/0`}
           alt="userLogo"
           class="w-[200px] h-[200px] xl:h-[220px] border"
         />

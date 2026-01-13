@@ -142,40 +142,77 @@ const init = async () => {
     await init();
   });
 
+  // async function fetchFile(applicationId, documentId) {
+  //   const response = await fetch(`/termloan/api/upload/${applicationId}/${documentId}/0`);
+  //   if (!response.ok) {
+  //     console.error("Failed to fetch file:", response.statusText);
+  //     return;
+  //   }
+
+  //   const contentType = response.headers.get("Content-Type");
+
+  //   if (contentType.startsWith("image/") || contentType === "application/pdf") {
+  //     const blob = await response.blob();
+  //     const newTab = window.open();
+
+  //     if (contentType.startsWith("image/")) {
+  //       const imgURL = URL.createObjectURL(blob);
+  //       newTab.document.write(
+  //         `<img src="/termloan/${imgURL}" style="max-width: 100%; height: auto;" />`
+  //       );
+  //     } else if (contentType === "application/pdf") {
+  //       const pdfURL = URL.createObjectURL(blob);
+  //       console.log('pdfURl',pdfURL)
+  //       newTab.document.write(
+  //         `<iframe src="/termloan/${pdfURL}" style="width: 100%; height: 100vh;" frameborder="0"></iframe>`
+  //       );
+  //     }
+
+  //     newTab.document.close();
+  //   } else {
+  //     const fileContent = await response.text(); // Handle as text if it's not an image or PDF
+  //     const newTab = window.open();
+  //     newTab.document.write(`<pre>${fileContent}</pre>`);
+  //     newTab.document.close();
+  //   }
+  // }
+
+  
+
+  //Disply the Uploded documents ...
   async function fetchFile(applicationId, documentId) {
-    const response = await fetch(`/termloan/api/upload/${applicationId}/${documentId}/0`);
-    if (!response.ok) {
-      console.error("Failed to fetch file:", response.statusText);
-      return;
-    }
+  const response = await fetch(
+    `/termloan/api/upload/${applicationId}/${documentId}/0`
+  );
 
-    const contentType = response.headers.get("Content-Type");
-
-    if (contentType.startsWith("image/") || contentType === "application/pdf") {
-      const blob = await response.blob();
-      const newTab = window.open();
-
-      if (contentType.startsWith("image/")) {
-        const imgURL = URL.createObjectURL(blob);
-        newTab.document.write(
-          `<img src="/termloan/${imgURL}" style="max-width: 100%; height: auto;" />`
-        );
-      } else if (contentType === "application/pdf") {
-        const pdfURL = URL.createObjectURL(blob);
-        console.log('pdfURl',pdfURL)
-        newTab.document.write(
-          `<iframe src="/termloan/${pdfURL}" style="width: 100%; height: 100vh;" frameborder="0"></iframe>`
-        );
-      }
-
-      newTab.document.close();
-    } else {
-      const fileContent = await response.text(); // Handle as text if it's not an image or PDF
-      const newTab = window.open();
-      newTab.document.write(`<pre>${fileContent}</pre>`);
-      newTab.document.close();
-    }
+  if (!response.ok) {
+    console.error("Failed to fetch file:", response.statusText);
+    return;
   }
+
+  const contentType = response.headers.get("Content-Type");
+  const blob = await response.blob();
+  const fileURL = URL.createObjectURL(blob);
+
+  const newTab = window.open();
+
+  if (contentType.startsWith("image/")) {
+    newTab.document.write(`
+      <img src="${fileURL}" style="max-width:100%;height:auto;" />
+    `);
+  } 
+  else if (contentType === "application/pdf") {
+    newTab.document.write(`
+      <iframe src="${fileURL}" style="width:100%;height:100vh;" frameborder="0"></iframe>
+    `);
+  } 
+  else {
+    newTab.document.write(`<pre>Unsupported file type</pre>`);
+  }
+
+  newTab.document.close();
+}
+
 
   async function deleteFile(applicationId, documentId) {
     let message;

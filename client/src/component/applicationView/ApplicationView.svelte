@@ -148,7 +148,7 @@
             </h1>
             <div class="my-5 flex justify-center items-center">
               <img
-                src={`/termloan/api/upload/${currentApplication.personalDetails.id}/1/1`}
+                src={`/termloan/api/upload/${currentApplication.personalDetails.id}/1/0`}
                 alt="applicantImage"
                 class="md:size-[150px] size-[120px] border border-gray-300"
               />
@@ -162,7 +162,7 @@
             </h1>
             <div class="my-5 flex justify-center items-center">
               <img
-                src={`/termloan/api/upload/${currentApplication.personalDetails.id}/${currentApplication.personalDetails.guarantor == 1 ? "2" : "1"}/1`}
+                src={`/termloan/api/upload/${currentApplication.personalDetails.id}/${currentApplication.personalDetails.guarantor == 1 ? "2" : "1"}/0`}
                 alt="applicantImage"
                 class="md:size-[150px] size-[120px] border border-gray-300"
               />
