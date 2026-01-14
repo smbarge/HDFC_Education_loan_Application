@@ -4,6 +4,7 @@
   import logInSuite from "$lib/validate/logIn.js";
   import { Button, Checkbox, Card, Avatar } from "flowbite-svelte";
   import { Input, Helper } from "flowbite-svelte";
+  import { authApi } from "$api/authApi";
   import {
     token,
     refreshToken,
@@ -226,13 +227,97 @@
     return applications;
   };
 
+  // async function loginApplicant() {
+  //   alertMsg = ""; // Clear previous error messages
+  //   // Trim the mobile and password inputs before validation
+  //   data.mobile = data.mobile.trim();
+  //   data.password = data.password.trim();
+  //   console.log("will attempt to login");
+  //   // Ensure inputs are valid
+  //   onSubmit();
+  //   if (errors.mobile || errors.password) {
+  //     alertMsg = "Please provide valid inputs";
+  //     return;
+  //   }
+
+  //   try {
+  //     const { mobile, password } = data;
+  //     const response = await fetch(
+  //       "https://keycloak.chanakyasoft.com/realms/fat/protocol/openid-connect/token",
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/x-www-form-urlencoded",
+  //         },
+  //         body: new URLSearchParams({
+  //           client_id: "loan_application", // Your client ID
+  //           grant_type: "password",
+  //           username: mobile,
+  //           password,
+  //           scope: "openid",
+  //         }),
+  //       }
+  //     );
+
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       $token = data.access_token;
+  //       $refreshToken = data.refresh_token;
+  //       $userId = getUserIdFromToken($token);
+  //       $username = mobile;
+  //       {
+  //         let {
+  //           error,
+  //           errorMsg,
+  //           applications: lApplications,
+  //         } = await api.getApplications();
+  //         lApplications = initApplications(lApplications);
+  //         console.log("error: ", error);
+  //         console.log("errorMsg: ", errorMsg);
+  //         console.log("applications: ", lApplications);
+  //         $applications = lApplications;
+  //       }
+  //       console.log("userId: ", $userId);
+
+  //       // user Info:
+  //       {
+  //         const url =
+  //           "https://keycloak.chanakyasoft.com/realms/fat/protocol/openid-connect/userinfo";
+  //         const response = await fetch(url, {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-Type": "application/x-www-form-urlencoded",
+  //             Authorization: `Bearer ${$token}`,
+  //           },
+  //         });
+  //         if (response.ok) {
+  //           const data = await response.json();
+  //           console.log("User Info is: ", data);
+  //           $given_name = data.given_name;
+  //           $preferred_username = data.preferred_username;
+  //         } else {
+  //           console.log("failed to get user info for token: ", $token);
+  //         }
+  //       }
+
+  //       goto("/termloan/finalDashboard");
+  //     } else {
+  //       const errorData = await response.json();
+  //       alertMsg = errorData.error_description || "Login failed";
+  //     }
+  //   } catch (error) {
+  //     console.log("exception in login: ", error);
+  //     alertMsg = "An error occurred during login";
+  //   }
+  // }
+
   async function loginApplicant() {
-    alertMsg = ""; // Clear previous error messages
-    // Trim the mobile and password inputs before validation
+    alertMsg = "";
     data.mobile = data.mobile.trim();
     data.password = data.password.trim();
+    
     console.log("will attempt to login");
-    // Ensure inputs are valid
+    
     onSubmit();
     if (errors.mobile || errors.password) {
       alertMsg = "Please provide valid inputs";
@@ -241,68 +326,40 @@
 
     try {
       const { mobile, password } = data;
-      const response = await fetch(
-        "https://keycloak.chanakyasoft.com/realms/fat/protocol/openid-connect/token",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: new URLSearchParams({
-            client_id: "loan_application", // Your client ID
-            grant_type: "password",
-            username: mobile,
-            password,
-            scope: "openid",
-          }),
-        }
-      );
+      
+      // Use custom login instead of Keycloak
+      const response = await authApi.loginApplicant({ mobile, password });
 
-      if (response.ok) {
-        const data = await response.json();
-        $token = data.access_token;
-        $refreshToken = data.refresh_token;
-        $userId = getUserIdFromToken($token);
-        $username = mobile;
-        {
-          let {
-            error,
-            errorMsg,
-            applications: lApplications,
-          } = await api.getApplications();
-          lApplications = initApplications(lApplications);
-          console.log("error: ", error);
-          console.log("errorMsg: ", errorMsg);
-          console.log("applications: ", lApplications);
-          $applications = lApplications;
-        }
+      if (response.error === 0 && response.token) {
+
+
+        // Store tokens exactly like before
+        $token = response.token;
+        $refreshToken = response.refreshToken;
+        $userId = response.user.id;
+        $username = response.user.mobile;
+        $given_name = response.user.name;
+        $preferred_username = response.user.mobile;
+
+        // Fetch applications
+        let {
+          error,
+          errorMsg,
+          applications: lApplications,
+        } = await api.getApplications();
+        
+        lApplications = initApplications(lApplications);
+        console.log("error: ", error);
+        console.log("errorMsg: ", errorMsg);
+        console.log("applications: ", lApplications);
+        $applications = lApplications;
+
         console.log("userId: ", $userId);
 
-        // user Info:
-        {
-          const url =
-            "https://keycloak.chanakyasoft.com/realms/fat/protocol/openid-connect/userinfo";
-          const response = await fetch(url, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              Authorization: `Bearer ${$token}`,
-            },
-          });
-          if (response.ok) {
-            const data = await response.json();
-            console.log("User Info is: ", data);
-            $given_name = data.given_name;
-            $preferred_username = data.preferred_username;
-          } else {
-            console.log("failed to get user info for token: ", $token);
-          }
-        }
-
+        // Redirect 
         goto("/termloan/finalDashboard");
       } else {
-        const errorData = await response.json();
-        alertMsg = errorData.error_description || "Login failed";
+        alertMsg = response.errorMsg || "Login failed";
       }
     } catch (error) {
       console.log("exception in login: ", error);

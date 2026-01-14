@@ -682,6 +682,7 @@ const getUserId = async ({ mobile }) => {
       const users = await userResponse.json();
       console.log("users is ",users);
       
+      
       if (users.length > 0) {
         const userId = users[0].id;
         const name=users[0].firstName // Extract user ID
@@ -696,16 +697,198 @@ const getUserId = async ({ mobile }) => {
     return { error: -2, errorMsg: e };
   }
 };
+
+//MAIN
+// Custom Registration - Send OTP----------------------
+
+const customVerifyApplicantAndSendOtp = async ({ mobile, name }) => {
+  console.log("customVerifyApplicantAndSendOtp called with mobile:", mobile);
+  try {
+
+    
+    // Use GET request to check if user exists
+    const checkResponse = await fetch(`/termloan/api/auth?action=checkUser&mobile=${mobile}`, {  
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+
+    const checkData = await checkResponse.json();
+    
+    // If user exists, return error and DON'T send OTP
+    if (checkData.error === 0) {
+      return {
+        error: -1,
+        errorMsg: `User with mobile number ${mobile} already registered. Please login.`,
+      };
+    }
+
+    // Only send OTP if user does NOT exist
+    const params = { mobileNumber: mobile, name };
+    let url = `/termloan/api/sendOTP`;
+    let reply = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(params),
+    });
+
+    if (!(reply.status >= 200 && reply.status < 300)) {
+      const { error, errorMsg } = await reply.json();
+      return { error, errorMsg };
+    }
+
+    const { error, errorMsg, uid: mobileVerificationId } = await reply.json();
+    console.log("mobileVerificationId---", mobileVerificationId);
+    return { error, errorMsg, mobileVerificationId };
+  } catch (e) {
+    console.log("customVerifyApplicantAndSendOtp failed with error:", e);
+    return { error: -1, errorMsg: e.message };
+  }
+};
+
+// Custom Registration
+const customVerifyApplicant = async ({ mobile, name, password, mobileConfirmationCode }) => {
+  console.log("customVerifyApplicant called with mobile:", mobile);
+  try {
+    const response = await fetch('/termloan/api/auth', {  
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        mobile,
+        name,
+        password,
+        otp: mobileConfirmationCode,
+        action: 'register'
+      }),
+    });
+
+    const data = await response.json();
+    
+    if (data.error && data.error !== 0) {
+      return { error: data.error, errorMsg: data.errorMsg };
+    }
+
+    console.log('User registered successfully');
+    return { error: 0, errorMsg: "", mobileConfirmationCode: "" };
+  } catch (e) {
+    console.log("customVerifyApplicant failed with error:", e);
+    return { error: -1, errorMsg: e.message };
+  }
+};
+
+// Custom Login
+const customLoginApplicant = async ({ mobile, password }) => {
+  console.log("customLoginApplicant called with mobile:", mobile);
+  try {
+    const response = await fetch('/termloan/api/auth', {  
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        mobile, 
+        password,
+        action: 'login'
+      }),
+    });
+
+    const data = await response.json();
+    
+    if (data.error && data.error !== 0) {
+      return { error: data.error, errorMsg: data.errorMsg };
+    }
+
+    console.log('Login successful');
+    return {
+      error: 0,
+      errorMsg: "",
+      user: data.user,
+      token: data.access_token,
+      refreshToken: data.refresh_token,
+    };
+  } catch (e) {
+    console.log("customLoginApplicant failed with error:", e);
+    return { error: -1, errorMsg: e.message };
+  }
+};
+
+// Custom Get User ID
+const customGetUserId = async ({ mobile }) => {
+  try {
+    const response = await fetch('/termloan/api/auth', {  
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        mobile,
+        action: 'getUserByMobile'
+      }),
+    });
+
+    const data = await response.json();
+    
+    if (data.error && data.error !== 0) {
+      return { error: data.error, errorMsg: data.errorMsg };
+    }
+
+    return {
+      error: 0,
+      errorMsg: "",
+      userId: data.userId,
+      name: data.name,
+    };
+  } catch (e) {
+    console.log("customGetUserId failed with error:", e);
+    return { error: -2, errorMsg: e.message };
+  }
+};
+
+// Custom Change Password
+const customChangePassword = async ({ mobile, password, userId }) => {
+  console.log("customChangePassword called for mobile:", mobile);
+  try {
+    const response = await fetch('/termloan/api/auth', { 
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        mobile, 
+        password, 
+        userId,
+        action: 'changePassword'
+      }),
+    });
+
+    const data = await response.json();
+    
+    if (data.error && data.error !== 0) {
+      return { error: data.error, errorMsg: data.errorMsg };
+    }
+
+    return { error: 0, errorMsg: "" };
+  } catch (e) {
+    console.log("customChangePassword failed with error:", e);
+    return { error: -1, errorMsg: e.message };
+  }
+};
+
 export let authApi = {
-  verifyApplicantAndSendOtp,
+  verifyApplicantAndSendOtp: customVerifyApplicantAndSendOtp, // C
   verifyOtp,
-  verifyApplicant,
-  loginApplicant,
+  verifyApplicant: customVerifyApplicant, // C
+  loginApplicant: customLoginApplicant, // C
   personalDetails,
   businessDetails,
   guarantorPersonalDetails,
   InvestmentApplicantDetails,
   InvestmentGuarantorDetails,
-  changePassword,
-  getUserId,
+  changePassword: customChangePassword, // C
+  getUserId: customGetUserId, // C
 };

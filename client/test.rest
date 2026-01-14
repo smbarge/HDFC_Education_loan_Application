@@ -333,3 +333,74 @@ Content-Type: application/json
 GET http://localhost:5179/termloan/api/sanctionInfo?application_id=267 HTTP/1.1
 content-type: application/json
 
+
+# Custome User Resister
+
+### Check if user exists
+POST http://localhost:5173/termloan/api/auth
+Content-Type: application/json
+
+{
+  "action": "checkUser",
+  "mobile": "8624863840"
+}
+
+###Check if user exists (GET)
+GET http://localhost:5173/termloan/api/auth?action=checkUser&mobile=9999999999
+Content-Type: application/json
+
+
+### Register new user
+POST http://localhost:5173/termloan/api/auth
+Content-Type: application/json
+
+{
+  "action": "register",
+  "mobile": "9999999990",
+  "name": "Test User11",
+  "password": "Admin@123",
+  "otp": "123456"
+}
+
+### Register with existing mobile (duplicate case)
+POST http://localhost:5173/termloan/api/auth
+Content-Type: application/json
+
+{
+  "action": "register",
+  "mobile": "9999999990",
+  "name": "Duplicate User",
+  "password": "Admin@123",
+  "otp": "123456"
+}
+
+
+### Login user
+POST http://localhost:5173/termloan/api/auth
+Content-Type: application/json
+
+{
+  "action": "login",
+  "mobile": "9999999990",
+  "password": "Admin@123"
+}
+
+###Get user by mobile
+POST http://localhost:5173/termloan/api/auth
+Content-Type: application/json
+
+{
+  "action": "getUserByMobile",
+  "mobile": "9999999990"
+}
+
+
+###Change password
+POST http://localhost:5173/termloan/api/auth
+Content-Type: application/json
+
+{
+  "action": "changePassword",
+  "mobile": "9999999999",
+  "password": "Admin@123"
+}
