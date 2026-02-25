@@ -542,11 +542,11 @@
           <h1
             class="xl:text-3xl lg:text-2xl md:text-xl text-lg capitalize font-bold font-roboto text-gray-700"
           >
-            Applicant Personal Details :
+            Student Personal Details :
             <h1
               class="xl:text-1xl lg:text-1xl md:text-xl text-lg capitalize font-bold font-roboto py-1 text-gray-700"
             >
-              अर्जदाराचे वैयक्तिक माहिती
+               विद्यार्थ्याची वैयक्तिक माहिती
             </h1>
           </h1>
         </div>
@@ -1145,6 +1145,9 @@
             {/if}
           </div>
         </div> -->
+
+        <!-- Current Address Section -->
+
         <div class="border-b border-gray-300 p-5">
           <div class="border-b-2 border-gray-300 pb-2">
             <h1
@@ -1483,6 +1486,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Permanent Address section -->
 
         <div class="border-b border-gray-300 p-5">
           <div
@@ -1835,78 +1840,50 @@
           </div>
         </div>
 
+       <!-- Life & Education Details/जीवन आणि शिक्षण तपशील : -->
+
         <div class="grid grid-cols-12 gap-5 px-5 py-5">
           <div class="col-span-12 border-b-2 border-gray-300 pb-2">
-            <h1
-              class="block md:text-xl text-lg capitalize font-semibold font-inter text-gray-700"
-            >
+            <h1 class="block md:text-xl text-lg capitalize font-semibold font-inter text-gray-700">
               Life & Education Details/जीवन आणि शिक्षण तपशील :
             </h1>
           </div>
 
-          <div class="lg:col-span-4 col-span-12 lg:px-5">
+          <div class="lg:col-span-6 col-span-12 lg:px-5">
             <div class="grid grid-cols-12 justify-start items-center">
               <div class="lg:col-span-12 md:col-span-5 col-span-12">
-                <h1
-                  class="block text-sm font-semibold font-roboto text-gray-500"
-                >
-                  Select Marital Status/वैवाहिक स्थिती निवडा : <span
-                    class="text-red-500">*</span
-                  >
+                <h1 class="block text-sm font-semibold font-roboto text-gray-500">
+                  Select Marital Status/वैवाहिक स्थिती निवडा : 
+                  <span class="text-red-500">*</span>
                 </h1>
               </div>
-              <div class="lg:hidden md:block hidden col-span-1">:</div>
-              <div
-                class="col-span-12 md:col-span-6 lg:col-span-12 relative w-full mt-1"
-              >
+              <div class="col-span-12 md:col-span-6 lg:col-span-12 relative w-full mt-1">
                 <button
                   class="flex text-sm justify-between items-center w-full px-4 md:py-2 py-1.5 bg-white border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-left"
                   on:click={toggleMaritalDropdown}
                 >
-                  <!-- {selectedMaritalStatus || "-- Select a status --"} -->
                   {#if data.marital_status}
-                    {select_marital_status.find(
-                      (e) => e.id == data.marital_status,
-                    ).eng_name}&nbsp;-&nbsp;{select_marital_status.find(
-                      (e) => e.id == data.marital_status,
-                    ).dev_name}
+                    {select_marital_status.find((e) => e.id == data.marital_status).eng_name}&nbsp;-&nbsp;
+                    {select_marital_status.find((e) => e.id == data.marital_status).dev_name}
                   {:else}
                     <h1 class="text-gray-500">Select status</h1>
                   {/if}
                   <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 -960 960 960"
-                      class="size-4 md:size-5 fill-gray-500 {showMaritalStatusDropdown
-                        ? '-rotate-90'
-                        : 'rotate-90'}"
-                    >
-                      <path
-                        d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"
-                      />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+                      class="size-4 md:size-5 fill-gray-500 {showMaritalStatusDropdown ? '-rotate-90' : 'rotate-90'}">
+                      <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
                     </svg>
                   </div>
                 </button>
                 {#if errors["marital_status"]}
-                  {#if errors.marital_status}
-                    <Helper color="red" class="absolute">
-                      {errors.marital_status}
-                    </Helper>
-                  {/if}
+                  <Helper color="red" class="absolute">{errors.marital_status}</Helper>
                 {/if}
                 {#if showMaritalStatusDropdown}
-                  <div
-                    transition:slide={{ duration: 400 }}
-                    class="absolute z-10 w-full mt-0.5 bg-white border border-gray-300"
-                  >
+                  <div transition:slide={{ duration: 400 }}
+                    class="absolute z-10 w-full mt-0.5 bg-white border border-gray-300">
                     {#each select_marital_status as s, index}
-                      <button
-                        on:click={() => selectMaritalStatus(s)}
-                        class="w-full text-sm text-gray-500 font-lato px-4 py-1 text-left hover:bg-gray-100 {index !==
-                        maritalStatuses.length - 1
-                          ? 'border-b'
-                          : ''}"
-                      >
+                      <button on:click={() => selectMaritalStatus(s)}
+                        class="w-full text-sm text-gray-500 font-lato px-4 py-1 text-left hover:bg-gray-100 {index !== select_marital_status.length - 1 ? 'border-b' : ''}">
                         {s.eng_name}&nbsp;-&nbsp;{s.dev_name}
                       </button>
                     {/each}
@@ -1915,72 +1892,44 @@
               </div>
             </div>
           </div>
-          <div class="lg:col-span-4 col-span-12 xl:px-5">
+
+          <div class="lg:col-span-6 col-span-12 xl:px-5">
             <div class="grid grid-cols-12 justify-start items-center">
               <div class="col-span-12 md:col-span-5 lg:col-span-12">
-                <h1
-                  class="block text-sm font-semibold font-roboto text-gray-500"
-                >
-                  Educational Qualifications/शैक्षणिक पात्रता : <span
-                    class="text-red-500">*</span
-                  >
+                <h1 class="block text-sm font-semibold font-roboto text-gray-500">
+                  Educational Qualifications (Last Passed Exam)/शैक्षणिक पात्रता (शेवटची उत्तीर्ण परीक्षा) :
+                  <span class="text-red-500">*</span>
                 </h1>
               </div>
-              <div class="lg:hidden md:block hidden col-span-1">:</div>
-
-              <div
-                class="col-span-12 md:col-span-6 lg:col-span-12 relative w-full mt-1"
-              >
+              <div class="col-span-12 md:col-span-6 lg:col-span-12 relative w-full mt-1">
                 <button
                   class="flex text-sm justify-between items-center w-full px-4 md:py-2 py-1.5 bg-white border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-left"
                   on:click={toggleQualificationDropdown}
                 >
-                  <!-- {selectedQualificationlStatus || "-- Select a qualification --"} -->
                   {#if data.education_qualification}
-                    {select_education_qualification.find(
-                      (e) => e.id == data.education_qualification,
-                    )
-                      .eng_name}&nbsp;-&nbsp;{select_education_qualification.find(
-                      (e) => e.id == data.education_qualification,
-                    ).dev_name}
+                    {select_education_qualification.find((e) => e.id == data.education_qualification).eng_name}&nbsp;-&nbsp;
+                    {select_education_qualification.find((e) => e.id == data.education_qualification).dev_name}
                   {:else}
-                    <h1 class="text-gray-500">Select status</h1>
+                    <h1 class="text-gray-500">Select qualification</h1>
                   {/if}
                   <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 -960 960 960"
-                      class="size-4 md:size-5 fill-gray-500 {showQualificationDropdown
-                        ? '-rotate-90'
-                        : 'rotate-90'}"
-                    >
-                      <path
-                        d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"
-                      />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+                      class="size-4 md:size-5 fill-gray-500 {showQualificationDropdown ? '-rotate-90' : 'rotate-90'}">
+                      <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
                     </svg>
                   </div>
                 </button>
                 {#if errors["education_qualification"]}
-                  {#if errors.education_qualification}
-                    <Helper color="red" class="absolute">
-                      {errors.education_qualification}
-                    </Helper>
-                  {/if}
+                  <Helper color="red" class="absolute">{errors.education_qualification}</Helper>
                 {/if}
                 {#if showQualificationDropdown}
-                  <div
-                    transition:slide={{ duration: 400 }}
-                    class="absolute z-10 w-full mt-0.5 bg-white border border-gray-300"
-                  >
+                  <div transition:slide={{ duration: 400 }}
+                    class="absolute z-10 w-full mt-0.5 bg-white border border-gray-300">
                     {#each select_education_qualification as q, index}
                       <button
-                        class="w-full capitalize text-sm text-gray-500 font-lato px-4 py-1 text-left hover:bg-gray-100 {index !==
-                        Qualifications.length - 1
-                          ? 'border-b'
-                          : ''}"
-                        on:click={() => selectQualification(q)}
-                      >
-                        {q.eng_name}&nbsp-&nbsp{q.dev_name}
+                        class="w-full capitalize text-sm text-gray-500 font-lato px-4 py-1 text-left hover:bg-gray-100 {index !== select_education_qualification.length - 1 ? 'border-b' : ''}"
+                        on:click={() => selectQualification(q)}>
+                        {q.eng_name}&nbsp;-&nbsp;{q.dev_name}
                       </button>
                     {/each}
                   </div>
@@ -1989,531 +1938,270 @@
             </div>
           </div>
 
-          {#if data.education_qualification == "1"}
-            <div
-              class="col-span-12 flex justify-start items-start gap-5 lg:px-5"
-            >
-              <div class="grid justify-start items-center">
-                <p class="lg:text-base text-sm text-gray-600 font-roboto">
-                  Are you at least literate ?
-                </p>
-
-                <p
-                  class="block md:text-[13px] text-[10px] text-gray-500 font-marathi2"
-                >
-                  तुम्ही किमान साक्षर आहात का?
-                </p>
-              </div>
-              <div class="flex items-center">
-                <label class="flex items-center mr-4">
-                  <input
-                    on:input={(e) => {
-                      data.literate = e.target.value;
-                      onInput("literate");
-                    }}
-                    type="radio"
-                    name="literacy"
-                    value={1}
-                    checked={data.literate == 1 ? true : false}
-                    bind:group={data.literate}
-                    class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
-                  />
-                  <span
-                    class="ml-2 text-gray-700 md:text-base text-sm font-marvel font-medium"
-                    >Yes</span
-                  >
-                </label>
-                <label class="flex items-center">
-                  <input
-                    on:input={(e) => {
-                      data.literate = e.target.value;
-                      onInput("literate");
-                    }}
-                    type="radio"
-                    name="literacy"
-                    value={2}
-                    checked={data.literate == 2 ? true : false}
-                    bind:group={data.literate}
-                    class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
-                  />
-                  <span
-                    class="ml-2 text-gray-700 md:text-base text-sm font-marvel font-medium"
-                    >No</span
-                  >
-                </label>
-                <div class="ml-4">
-                  {#if errors.literate}
-                    <p class="text-red-500">{errors.literate}</p>
-                  {/if}
-                </div>
-              </div>
-            </div>
-          {/if}
           {#if showQualificationDetails}
-            <div class="lg:col-span-4 col-span-12 xl:px-5">
+            <div class="lg:col-span-6 col-span-12 xl:px-5">
               <div class="grid grid-cols-12 justify-start items-center">
                 <div class="lg:col-span-12 md:col-span-5 col-span-12">
-                  <h1
-                    class="block text-sm font-semibold font-roboto text-gray-500"
-                  >
+                  <h1 class="block text-sm font-semibold font-roboto text-gray-500">
                     Enter Details/तपशील प्रविष्ट करा :
                   </h1>
                 </div>
-                <div class="lg:hidden md:block hidden col-span-1">:</div>
-                <div
-                  class="col-span-12 md:col-span-6 lg:col-span-12 relative w-full mt-1"
-                >
-                  <div
-                    class="absolute inset-y-0 left-0 px-3 flex items-center pointer-events-none border-r border-gray-300"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 -960 960 960"
-                      class="size-5 fill-gray-500"
-                    >
-                      <path
-                        d="M480-120 200-272v-240L40-600l440-240 440 240v320h-80v-276l-80 44v240L480-120Zm0-332 274-148-274-148-274 148 274 148Zm0 241 200-108v-151L480-360 280-470v151l200 108Zm0-241Zm0 90Zm0 0Z"
-                      />
+                <div class="col-span-12 md:col-span-6 lg:col-span-12 relative w-full mt-1">
+                  <div class="absolute inset-y-0 left-0 px-3 flex items-center pointer-events-none border-r border-gray-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="size-5 fill-gray-500">
+                      <path d="M480-120 200-272v-240L40-600l440-240 440 240v320h-80v-276l-80 44v240L480-120Zm0-332 274-148-274-148-274 148 274 148Zm0 241 200-108v-151L480-360 280-470v151l200 108Zm0-241Zm0 90Zm0 0Z" />
                     </svg>
                   </div>
-                  <input
-                    type="text"
-                    id="qualification"
+                  <input type="text" id="qualification"
                     class="block w-full pl-14 pr-3 md:py-2 py-1.5 border border-gray-300 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     placeholder="Enter qualification details ..."
-                    bind:value={data.details}
-                  />
+                    bind:value={data.details} />
                 </div>
               </div>
             </div>
           {/if}
         </div>
 
-        <div class="grid grid-cols-4 gap-5 p-5 border-b border-gray-300">
-          <div class="col-span-4">
-            <label
-              for="name"
-              class="block md:text-xl text-lg font-semibold font-inter text-gray-700 border-b-2 border-gray-300 pb-2"
-            >
-              Occupation of Father/Husband/वडिलांचा/पतीचा व्यवसाय :
-            </label>
-            <div class="grid grid-cols-12 gap-5 lg:px-5 py-5">
-              <div class="col-span-12 md:col-span-6 lg:col-span-3">
-                <label
-                  for="relation"
-                  class="block text-sm font-semibold font-roboto text-gray-500"
-                >
-                  Select Father/Husband/वडील/पती निवडा : <span
-                    class="text-red-500">*</span
-                  >
-                </label>
-                <div class="mt-1 relative w-full">
-                  <button
-                    class="flex text-sm justify-between items-center w-full px-4 md:py-2 py-1.5 bg-white border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-left"
-                    on:click={toggleRelationDropdown}
-                  >
-                    <!-- {relationshipStatus || "Select Father/Husband"} -->
-                    {#if data.guardian}
-                      {guardian.find((e) => e.id == data.guardian)
-                        .eng_name}&nbsp;-&nbsp;{guardian.find(
-                        (e) => e.id == data.guardian,
-                      ).dev_name}
-                    {:else}
-                      <h1 class="text-gray-500">Select status</h1>
-                    {/if}
-                    <div>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 -960 960 960"
-                        class="size-4 lg:size-5 fill-gray-500 {showRelationshipDropdown
-                          ? '-rotate-90'
-                          : 'rotate-90'}"
-                      >
-                        <path
-                          d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"
-                        />
-                      </svg>
-                    </div>
-                  </button>
-                  {#if errors["guardian"]}
-                    {#if errors.guardian}
-                      <Helper color="red" class="absolute">
-                        {errors.guardian}
-                      </Helper>
-                    {/if}
-                  {/if}
-                  {#if showRelationshipDropdown}
-                    <div
-                      transition:slide={{ duration: 400 }}
-                      class="absolute z-10 w-full mt-0.5 bg-white border border-gray-300"
-                    >
-                      {#each guardian as g, index}
-                        <button
-                          class="w-full capitalize text-sm text-gray-500 font-lato px-4 py-1 text-left hover:bg-gray-100 {index !==
-                          Relationships.length - 1
-                            ? 'border-b'
-                            : ''}"
-                          on:click={() => selectGuardian(g)}
-                        >
-                          {g.eng_name}&nbsp;-&nbsp;&nbsp;{g.dev_name}
-                        </button>
-                      {/each}
-                    </div>
-                  {/if}
+      <!--Parent/Guardian Information Section -->
+      <div class="grid grid-cols-4 gap-5 p-5 border-b border-gray-300">
+        <div class="col-span-4">
+          <label for="name"
+            class="block md:text-xl text-lg font-semibold font-inter text-gray-700 border-b-2 border-gray-300 pb-2">
+            Parent / Guardian Information/पालक/पालकाची माहिती :
+          </label>
+          <div class="grid grid-cols-12 gap-5 lg:px-5 py-5">
+            
+            <!-- Parent/Guardian Name -->
+            <div class="col-span-12 md:col-span-6 lg:col-span-4">
+              <label for="guardian_name" class="block text-sm font-semibold font-roboto text-gray-500">
+                Parent / Guardian Name/पालक/पालकाचे नाव : 
+                <span class="text-red-500">*</span>
+              </label>
+              <div class="mt-1 relative">
+                <div class="absolute inset-y-0 left-0 px-2 flex items-center pointer-events-none border-r border-gray-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="size-4 fill-gray-500">
+                    <path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z" />
+                  </svg>
                 </div>
+                <input type="text" name="guardian_name" id="guardian_name"
+                  class="block w-full pl-[42px] pr-3 md:py-2 py-1.5 text-sm border border-gray-300 placeholder:text-sm placeholder:text-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  placeholder="Enter parent/guardian name..."
+                  bind:value={data.guardian_name}
+                  on:input={(e) => {
+                    data.guardian_name = e.target.value.toUpperCase();
+                    onInput("guardian_name");
+                  }} />
+                {#if errors["guardian_name"]}
+                  <Helper color="red" class="absolute">{errors.guardian_name}</Helper>
+                {/if}
               </div>
-              {#if data.guardian}
-                <div class="col-span-12 lg:col-span-4 md:col-span-6">
-                  <!-- <label
-                    for="occupation"
-                    class="block text-sm font-semibold font-roboto text-gray-500"
-                  >
-                    Select Father/Husband (s) Occupation
-                    <span>
-                      वडील/पती (चे) व्यवसाय निवडा
-                    </span> <span
-                      class="text-red-500">*</span
-                    >
-                  </label> -->
-                  <label
-                    for="occupation"
-                    class="block text-sm font-semibold font-roboto text-gray-500"
-                  >
-                    Select Father/Husband(s) Occupation/वडील/पतीचे व्यवसाय
-                    निवडा: <span class="text-red-500">*</span>
-                  </label>
+            </div>
 
-                  <div class="mt-1 relative w-full">
-                    <button
-                      class="flex text-sm justify-between items-center w-full px-4 md:py-2 py-1.5 bg-white border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-left"
-                      on:click={toggleOccupationDropdown}
-                    >
-                      <!-- {occupationStatus || "Select Occupation"} -->
-                      {#if data.occupation}
-                        {occupation.find((o) => o.id == data.occupation)
-                          .eng_name}&nbsp;&nbsp;-&nbsp;&nbsp;{occupation.find(
-                          (o) => o.id == data.occupation,
-                        ).dev_name}
-                      {:else}
-                        <h1 class="text-gray-500">Select occupation</h1>
-                      {/if}
-                      <div>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 -960 960 960"
-                          class="size-4 lg:size-5 fill-gray-500 {showOccupationsDropdown
-                            ? '-rotate-90'
-                            : 'rotate-90'}"
-                        >
-                          <path
-                            d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"
-                          />
-                        </svg>
-                      </div>
-                    </button>
-                    {#if errors["occupation"]}
-                      {#if errors.occupation}
-                        <Helper color="red" class="absolute">
-                          {errors.occupation}
-                        </Helper>
-                      {/if}
-                    {/if}
-                    {#if showOccupationsDropdown}
-                      <div
-                        transition:slide={{ duration: 400 }}
-                        class="absolute z-10 w-full mt-0.5 bg-white border border-gray-300"
-                      >
-                        {#each occupation as o, index}
-                          <button
-                            class="w-full capitalize text-sm text-gray-500 font-lato px-4 py-1 text-left hover:bg-gray-100 {index !==
-                            occupation.length - 1
-                              ? 'border-b'
-                              : ''}"
-                            on:click={() => selectOccupation(o)}
-                          >
-                            {o.eng_name}&nbsp;&nbsp;-&nbsp;&nbsp;{o.dev_name}
-                          </button>
-                        {/each}
-                      </div>
-                    {/if}
-                  </div>
-                </div>
-              {/if}
-              {#if showOccupationDetails}
-                <div class="col-span-12 md:col-span-6 lg:col-span-3">
-                  <label
-                    for="occupation"
-                    class="block text-sm font-semibold font-roboto text-gray-500"
-                  >
-                    Enter Type of Occupation/व्यवसायाचा प्रकार प्रविष्ट करा:
-                  </label>
-                  <div class="mt-1 relative">
-                    <div
-                      class="absolute inset-y-0 left-0 px-2 flex items-center pointer-events-none border-r border-gray-300"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 -960 960 960"
-                        class="size-4 fill-gray-500"
-                      >
-                        <path
-                          d="M160-120q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720h160v-80q0-33 23.5-56.5T400-880h160q33 0 56.5 23.5T640-800v80h160q33 0 56.5 23.5T880-640v440q0 33-23.5 56.5T800-120H160Zm240-600h160v-80H400v80Z"
-                        />
-                      </svg>
-                    </div>
-                    <input
-                      type="text"
-                      name="occupation"
-                      id="occupation"
-                      class="block w-full pl-[42px] pr-3 md:py-2 py-1.5 text-sm border border-gray-300 placeholder:text-sm placeholder:text-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                      placeholder="Enter occupationType of father/husband..."
-                      bind:value={data.occupationtype}
-                    />
-                  </div>
-                </div>
-              {/if}
-              <div class="col-span-12 md:col-span-6 lg:col-span-3">
-                <label
-                  for="fullName"
-                  class="block text-sm font-semibold font-roboto text-gray-500"
-                  >Annual Income of Family/कुटुंबाचे वार्षिक उत्पन्न : <span
-                    class="text-red-500">*</span
-                  >
-                </label>
-                <div class="mt-1 relative">
-                  <div
-                    class="absolute inset-y-0 left-0 px-2 flex items-center pointer-events-none border-r border-gray-300"
-                  >
-                    <svg
-                      viewBox="-96 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="size-4 fill-gray-500"
-                    >
-                      <g id="SVGRepo_bgCarrier" stroke-width="0" /><g
-                        id="SVGRepo_tracerCarrier"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <g id="SVGRepo_iconCarrier">
-                        <path
-                          d="M308 96c6.627 0 12-5.373 12-12V44c0-6.627-5.373-12-12-12H12C5.373 32 0 37.373 0 44v44.748c0 6.627 5.373 12 12 12h85.28c27.308 0 48.261 9.958 60.97 27.252H12c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h158.757c-6.217 36.086-32.961 58.632-74.757 58.632H12c-6.627 0-12 5.373-12 12v53.012c0 3.349 1.4 6.546 3.861 8.818l165.052 152.356a12.001 12.001 0 0 0 8.139 3.182h82.562c10.924 0 16.166-13.408 8.139-20.818L116.871 319.906c76.499-2.34 131.144-53.395 138.318-127.906H308c6.627 0 12-5.373 12-12v-40c0-6.627-5.373-12-12-12h-58.69c-3.486-11.541-8.28-22.246-14.252-32H308z"
-                        />
-                      </g>
+            <!-- Relationship -->
+            <div class="col-span-12 md:col-span-6 lg:col-span-4">
+              <label for="relation" class="block text-sm font-semibold font-roboto text-gray-500">
+                Relationship with Applicant/अर्जदाराशी नाते : 
+                <span class="text-red-500">*</span>
+              </label>
+              <div class="mt-1 relative w-full">
+                <button
+                  class="flex text-sm justify-between items-center w-full px-4 md:py-2 py-1.5 bg-white border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-left"
+                  on:click={toggleRelationDropdown}>
+                  {#if data.guardian}
+                    {guardian.find((e) => e.id == data.guardian).eng_name}&nbsp;-&nbsp;
+                    {guardian.find((e) => e.id == data.guardian).dev_name}
+                  {:else}
+                    <h1 class="text-gray-500">Select relationship</h1>
+                  {/if}
+                  <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+                      class="size-4 lg:size-5 fill-gray-500 {showRelationshipDropdown ? '-rotate-90' : 'rotate-90'}">
+                      <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
                     </svg>
                   </div>
-                  <input
-                    on:input={(e) => {
-                      data.income = e.target.value;
-                      onInput("income");
-                    }}
-                    type="text"
-                    name="annual income"
-                    id="annual income"
-                    class="block w-full pl-[42px] pr-3 md:py-2 py-1.5 text-sm border border-gray-300 placeholder:text-sm placeholder:text-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                    placeholder="Enter annual income of family..."
-                    bind:value={data.income}
-                  />
-                  {#if errors["income"]}
-                    {#if errors.income}
-                      <Helper color="red" class="absolute">
-                        {errors.income}
-                      </Helper>
-                    {/if}
+                </button>
+                {#if errors["guardian"]}
+                  <Helper color="red" class="absolute">{errors.guardian}</Helper>
+                {/if}
+                {#if showRelationshipDropdown}
+                  <div transition:slide={{ duration: 400 }}
+                    class="absolute z-10 w-full mt-0.5 bg-white border border-gray-300">
+                    {#each guardian as g, index}
+                      <button
+                        class="w-full capitalize text-sm text-gray-500 font-lato px-4 py-1 text-left hover:bg-gray-100 {index !== guardian.length - 1 ? 'border-b' : ''}"
+                        on:click={() => selectGuardian(g)}>
+                        {g.eng_name}&nbsp;-&nbsp;{g.dev_name}
+                      </button>
+                    {/each}
+                  </div>
+                {/if}
+              </div>
+            </div>
+
+            <!-- Occupation of Parent/Guardian -->
+            <div class="col-span-12 md:col-span-6 lg:col-span-4">
+              <label for="occupation" class="block text-sm font-semibold font-roboto text-gray-500">
+                Occupation of Parent / Guardian/पालकाचा व्यवसाय : 
+                <span class="text-red-500">*</span>
+              </label>
+              <div class="mt-1 relative w-full">
+                <button
+                  class="flex text-sm justify-between items-center w-full px-4 md:py-2 py-1.5 bg-white border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-left"
+                  on:click={toggleOccupationDropdown}>
+                  {#if data.occupation}
+                    {occupation.find((o) => o.id == data.occupation).eng_name}&nbsp;-&nbsp;
+                    {occupation.find((o) => o.id == data.occupation).dev_name}
+                  {:else}
+                    <h1 class="text-gray-500">Select occupation</h1>
                   {/if}
+                  <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+                      class="size-4 lg:size-5 fill-gray-500 {showOccupationsDropdown ? '-rotate-90' : 'rotate-90'}">
+                      <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
+                    </svg>
+                  </div>
+                </button>
+                {#if errors["occupation"]}
+                  <Helper color="red" class="absolute">{errors.occupation}</Helper>
+                {/if}
+                {#if showOccupationsDropdown}
+                  <div transition:slide={{ duration: 400 }}
+                    class="absolute z-10 w-full mt-0.5 bg-white border border-gray-300">
+                    {#each occupation as o, index}
+                      <button
+                        class="w-full capitalize text-sm text-gray-500 font-lato px-4 py-1 text-left hover:bg-gray-100 {index !== occupation.length - 1 ? 'border-b' : ''}"
+                        on:click={() => selectOccupation(o)}>
+                        {o.eng_name}&nbsp;-&nbsp;{o.dev_name}
+                      </button>
+                    {/each}
+                  </div>
+                {/if}
+              </div>
+            </div>
+
+            {#if showOccupationDetails}
+              <div class="col-span-12 md:col-span-6 lg:col-span-4">
+                <label for="occupation_type" class="block text-sm font-semibold font-roboto text-gray-500">
+                  Enter Type of Occupation/व्यवसायाचा प्रकार प्रविष्ट करा:
+                  <span class="text-red-500">*</span>
+                </label>
+                <div class="mt-1 relative">
+                  <div class="absolute inset-y-0 left-0 px-2 flex items-center pointer-events-none border-r border-gray-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="size-4 fill-gray-500">
+                      <path d="M160-120q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720h160v-80q0-33 23.5-56.5T400-880h160q33 0 56.5 23.5T640-800v80h160q33 0 56.5 23.5T880-640v440q0 33-23.5 56.5T800-120H160Zm240-600h160v-80H400v80Z" />
+                    </svg>
+                  </div>
+                  <input type="text" name="occupation_type" id="occupation_type"
+                    class="block w-full pl-[42px] pr-3 md:py-2 py-1.5 text-sm border border-gray-300 placeholder:text-sm placeholder:text-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                    placeholder="Enter occupation type..."
+                    bind:value={data.occupationtype} />
                 </div>
               </div>
+            {/if}
+
+            <!-- Annual Income -->
+            <div class="col-span-12 md:col-span-6 lg:col-span-4">
+              <label for="annual_income" class="block text-sm font-semibold font-roboto text-gray-500">
+                Annual Income of Family/कुटुंबाचे वार्षिक उत्पन्न : 
+                <span class="text-red-500">*</span>
+              </label>
+              <div class="mt-1 relative">
+                <div class="absolute inset-y-0 left-0 px-2 flex items-center pointer-events-none border-r border-gray-300">
+                  <svg viewBox="-96 0 512 512" xmlns="http://www.w3.org/2000/svg" class="size-4 fill-gray-500">
+                    <path d="M308 96c6.627 0 12-5.373 12-12V44c0-6.627-5.373-12-12-12H12C5.373 32 0 37.373 0 44v44.748c0 6.627 5.373 12 12 12h85.28c27.308 0 48.261 9.958 60.97 27.252H12c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h158.757c-6.217 36.086-32.961 58.632-74.757 58.632H12c-6.627 0-12 5.373-12 12v53.012c0 3.349 1.4 6.546 3.861 8.818l165.052 152.356a12.001 12.001 0 0 0 8.139 3.182h82.562c10.924 0 16.166-13.408 8.139-20.818L116.871 319.906c76.499-2.34 131.144-53.395 138.318-127.906H308c6.627 0 12-5.373 12-12v-40c0-6.627-5.373-12-12-12h-58.69c-3.486-11.541-8.28-22.246-14.252-32H308z" />
+                  </svg>
+                </div>
+                <input type="text" name="annual_income" id="annual_income"
+                  class="block w-full pl-[42px] pr-3 md:py-2 py-1.5 text-sm border border-gray-300 placeholder:text-sm placeholder:text-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  placeholder="Enter annual income of family..."
+                  bind:value={data.income}
+                  on:input={(e) => {
+                    data.income = e.target.value;
+                    onInput("income");
+                  }} />
+                {#if errors["income"]}
+                  <Helper color="red" class="absolute">{errors.income}</Helper>
+                {/if}
+              </div>
             </div>
           </div>
         </div>
-        <div class="px-5 py-5">
-          <div class="grid grid-cols-12 gap-5 justify-start items-center">
-            <!-- <div class="xl:col-span-6 md:col-span-9 col-span-12">
-              <h1 class="lg:text-base text-sm text-gray-600 font-roboto">
-                Has the applicant or guarantor previously provided surety for
-                anyone else?
-              </h1>
-              <label
-                for="suretyDetails"
-                class="block md:text-[13px] text-[10px] text-gray-500 font-robotoMono"
-                >(If yes, please provide details)</label
-              >
-            </div> -->
-            <div class="xl:col-span-6 md:col-span-9 col-span-12">
-              <h1 class="lg:text-base text-sm text-gray-600 font-roboto">
-                Has the applicant previously provided surety for
-                anyone else?
-                <br />
-                अर्जदाराने पूर्वी कोणासाठीही हमी दिली आहे का? 
-              </h1>
-              <label
-                for="suretyDetails"
-                class="block md:text-[13px] text-[10px] text-gray-500 font-robotoMono"
-                >(If yes, please provide details)
-                <br />
-                (होय असल्यास, कृपया तपशील द्या)</label
-              >
-            </div>
+      </div>
 
-            <div
-              class="md:col-span-3 xl:col-span-2 col-span-4 flex items-center gap-5"
-            >
-              {#if data.past_surety_commitment == 1}
-                <button
-                  type="button"
-                  class={`bg-blue-700 text-white w-full border border-gray-500 md:text-sm text-xs font-bold md:px-4 px-5 py-1`}
-                  on:click={() => handleSuretyChange("yes")}
-                >
-                  Yes
-                </button>
-               
+      <!-- Updated Surety Section -->
+      <div class="px-5 py-5">
+        <div class="grid grid-cols-12 gap-5 justify-start items-center">
+          <div class="xl:col-span-6 md:col-span-9 col-span-12">
+            <h1 class="lg:text-base text-sm text-gray-600 font-roboto">
+              Has the applicant / parent previously provided surety for anyone else?
+              <br />
+              अर्जदार/पालक यांनी पूर्वी कोणासाठीही हमी दिली आहे का?
+            </h1>
+            <label for="suretyDetails" class="block md:text-[13px] text-[10px] text-gray-500 font-robotoMono">
+              (If yes, please provide details)
+              <br />
+              (होय असल्यास, कृपया तपशील द्या)
+            </label>
+          </div>
 
-                <button
-                  type="button"
-                  class={`bg-white text-gray-700  w-full border border-gray-500 md:text-sm text-xs font-bold md:px-4 px-5 py-1`}
-                  on:click={() => handleSuretyChange("no")}
-                >
-                  No
-                </button>
-              {:else if data.past_surety_commitment == 2}
-                <button
-                  type="button"
-                  class={`bg-white text-gray-700  w-full border border-gray-500 md:text-sm text-xs font-bold md:px-4 px-5 py-1`}
-                  on:click={() => handleSuretyChange("yes")}
-                >
-                  Yes
-                </button>
-
-                <button
-                  type="button"
-                  class={`bg-blue-700 text-white w-full border border-gray-500 md:text-sm text-xs font-bold md:px-4 px-5 py-1`}
-                  on:click={() => handleSuretyChange("no")}
-                >
-                  No
-                </button>
-              {:else}
-                <button
-                  type="button"
-                  class={`bg-white text-gray-700  w-full border border-gray-500 md:text-sm text-xs font-bold md:px-4 px-5 py-1`}
-                  on:click={() => handleSuretyChange("yes")}
-                >
-                  Yes
-                </button>
-
-                <button
-                  type="button"
-                  class={`bg-white text-gray-700  w-full border border-gray-500 md:text-sm text-xs font-bold md:px-4 px-5 py-1`}
-                  on:click={() => handleSuretyChange("no")}
-                >
-                  No
-                </button>
-              {/if}
-            </div>
+          <div class="md:col-span-3 xl:col-span-2 col-span-4 flex items-center gap-5">
+            {#if data.past_surety_commitment == 1}
+              <button type="button"
+                class="bg-blue-700 text-white w-full border border-gray-500 md:text-sm text-xs font-bold md:px-4 px-5 py-1"
+                on:click={() => handleSuretyChange("yes")}>
+                Yes
+              </button>
+              <button type="button"
+                class="bg-white text-gray-700 w-full border border-gray-500 md:text-sm text-xs font-bold md:px-4 px-5 py-1"
+                on:click={() => handleSuretyChange("no")}>
+                No
+              </button>
+            {:else if data.past_surety_commitment == 2}
+              <button type="button"
+                class="bg-white text-gray-700 w-full border border-gray-500 md:text-sm text-xs font-bold md:px-4 px-5 py-1"
+                on:click={() => handleSuretyChange("yes")}>
+                Yes
+              </button>
+              <button type="button"
+                class="bg-blue-700 text-white w-full border border-gray-500 md:text-sm text-xs font-bold md:px-4 px-5 py-1"
+                on:click={() => handleSuretyChange("no")}>
+                No
+              </button>
+            {:else}
+              <button type="button"
+                class="bg-white text-gray-700 w-full border border-gray-500 md:text-sm text-xs font-bold md:px-4 px-5 py-1"
+                on:click={() => handleSuretyChange("yes")}>
+                Yes
+              </button>
+              <button type="button"
+                class="bg-white text-gray-700 w-full border border-gray-500 md:text-sm text-xs font-bold md:px-4 px-5 py-1"
+                on:click={() => handleSuretyChange("no")}>
+                No
+              </button>
+            {/if}
+          </div>
+          
+          {#if errors["past_surety_commitment"]}
             <div class="mt-5">
-              {#if errors["past_surety_commitment"]}
-                {#if errors.past_surety_commitment}
-                  <Helper color="red" class="absolute">
-                    {errors.past_surety_commitment}
-                  </Helper>
-                {/if}
-              {/if}
+              <Helper color="red" class="absolute">{errors.past_surety_commitment}</Helper>
             </div>
-            {#if hasGivenSurety == "yes"}
-              <div class="xl:col-span-5 md:col-span-9 col-span-12">
-                <input
-                  on:input={(e) => {
-                    data.past_surety_commitment_detail = e.target.value;
-                    onInput("past_surety_commitment_detail");
-                  }}
-                  type="text"
-                  id="suretyDetails"
-                  name="suretyDetails"
-                  bind:value={data.past_surety_commitment_detail}
-                  class="block w-full px-3 py-2 border border-gray-300 placeholder:text-xs placeholder:text-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  placeholder="Enter details here..."
-                />
-              </div>
-              {:else if data.past_surety_commitment==1}
-              <div class="xl:col-span-5 md:col-span-9 col-span-12">
-                <input
-                type="text"
-                id="suretyDetails"
-                name="suretyDetails"
-                class="block w-full px-3 py-2 border border-gray-300 placeholder:text-xs placeholder:text-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                placeholder="Enter details here..."
+          {/if}
+          
+          {#if hasGivenSurety == "yes" || data.past_surety_commitment == 1}
+            <div class="xl:col-span-5 md:col-span-9 col-span-12">
+              <input type="text" id="suretyDetails" name="suretyDetails"
                 bind:value={data.past_surety_commitment_detail}
                 on:input={(e) => onInput("past_surety_commitment_detail")}
-              />  
-              </div>
-            {/if}
-          </div>
-          {#if errors["past_surety_commitment_detail"]}
-            {#if errors.past_surety_commitment_detail}
-              <Helper color="red" class="absolute">
-                {errors.past_surety_commitment_detail}
-              </Helper>
-            {/if}
+                class="block w-full px-3 py-2 text-sm border border-gray-300 placeholder:text-xs placeholder:text-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="Enter details here..." />
+            </div>
           {/if}
-          <!-- <div
-            class="grid grid-cols-12 md:gap-5 gap-3 justify-start items-center"
-          >
-            <div class="xl:col-span-6 col-span-12">
-              <h1 class="lg:text-base text-sm text-gray-600 font-roboto">
-                Is the applicant a Riot victim/Natural calamity victim/Disabled
-                person?
-              </h1>
-            </div>
-            <div
-              class="xl:col-span-6 col-span-12 md:flex grid items-center md:gap-5 gap-2"
-            >
-              <div class="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={data.riot_victim == 1 ? true : false}
-                  on:change={() =>
-                    (data.riot_victim = data.riot_victim == 1 ? 2 : 1)}
-                  id="riotVictim"
-                  class="form-checkbox size-4 lg:size-5 text-blue-600"
-                />
-                <label
-                  for="riotVictim"
-                  class="lg:text-base text-sm text-gray-600 font-roboto"
-                  >Riot victim</label
-                >
-              </div>
-              <div class="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={data.natural_calamity_victim == 1 ? true : false}
-                  on:change={() =>
-                    (data.natural_calamity_victim =
-                      data.natural_calamity_victim == 1 ? 2 : 1)}
-                  id="naturalCalamityVictim"
-                  class="form-checkbox size-4 lg:size-5 text-blue-600"
-                />
-                <label
-                  for="naturalCalamityVictim"
-                  class="lg:text-base text-sm text-gray-600 font-roboto"
-                  >Natural calamity victim</label
-                >
-              </div>
-              <div class="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={data.disabled_person == 1 ? true : false}
-                  on:change={() =>
-                    (data.disabled_person = data.disabled_person == 1 ? 2 : 1)}
-                  id="disabledPerson"
-                  class="form-checkbox size-4 lg:size-5 text-blue-600"
-                />
-                <label
-                  for="disabledPerson"
-                  class="lg:text-base text-sm text-gray-600 font-roboto"
-                  >Disabled person</label
-                >
-              </div>
-            </div>
-          </div> -->
         </div>
+        {#if errors["past_surety_commitment_detail"]}
+          <Helper color="red" class="absolute">{errors.past_surety_commitment_detail}</Helper>
+        {/if}
+      </div>
+   
       </div>
     </div>
   </div>
@@ -2523,6 +2211,8 @@
       <AlertMsg {alertMsg} />
     {/if}
   </div>
+
+  <!-- navigation button -->
   <div class="flex justify-center items-center py-5 gap-4">
     <button
       on:click={() => handleBackButtonClick()}

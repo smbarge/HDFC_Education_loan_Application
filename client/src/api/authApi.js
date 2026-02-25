@@ -884,7 +884,7 @@ export let authApi = {
   verifyOtp,
   verifyApplicant: customVerifyApplicant, // C
   loginApplicant: customLoginApplicant, // C
-  personalDetails,
+  personalDetails, 
   businessDetails,
   guarantorPersonalDetails,
   InvestmentApplicantDetails,
